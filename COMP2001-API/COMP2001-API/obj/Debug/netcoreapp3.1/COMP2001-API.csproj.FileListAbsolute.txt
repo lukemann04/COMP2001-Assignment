@@ -174,3 +174,4 @@ C:\Users\User\Documents\GitHub\COMP2001-Assignment\COMP2001-API\COMP2001-API\obj
 C:\Users\User\Documents\GitHub\COMP2001-Assignment\COMP2001-API\COMP2001-API\obj\Debug\netcoreapp3.1\Razor\Views\CourseworkUsers\Details.cshtml.g.cs
 C:\Users\User\Documents\GitHub\COMP2001-Assignment\COMP2001-API\COMP2001-API\obj\Debug\netcoreapp3.1\Razor\Views\CourseworkUsers\Edit.cshtml.g.cs
 C:\Users\User\Documents\GitHub\COMP2001-Assignment\COMP2001-API\COMP2001-API\obj\Debug\netcoreapp3.1\Razor\Views\CourseworkUsers\Index.cshtml.g.cs
+C:\Users\User\Documents\GitHub\COMP2001-Assignment\COMP2001-API\COMP2001-API\obj\Debug\netcoreapp3.1\COMP2001-API.csprojAssemblyReference.cache
