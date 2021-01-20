@@ -49,22 +49,6 @@ namespace COMP2001_API.Controllers
             return View();
         }
 
-        // POST: CourseworkUsers/Create
-        // To protect from overposting attacks, enable the specific properties you want to bind to, for 
-        // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
-        //[HttpPost]
-        //[ValidateAntiForgeryToken]
-        //public async Task<IActionResult> Create([Bind("UserId,UserFirstName,UserLastName,UserEmail,UserPassword")] CourseworkUser courseworkUser)
-        //{
-        //    if (ModelState.IsValid)
-        //    {
-        //        _context.Add(courseworkUser);
-        //        await _context.SaveChangesAsync();
-        //        return RedirectToAction(nameof(Index));
-        //    }
-        //    return View(courseworkUser);
-        //}
-
         // GET: CourseworkUsers/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
@@ -80,41 +64,6 @@ namespace COMP2001_API.Controllers
             }
             return View(courseworkUser);
         }
-
-        // POST: CourseworkUsers/Edit/5
-        // To protect from overposting attacks, enable the specific properties you want to bind to, for 
-        // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
-        //[HttpPost]
-        //[ValidateAntiForgeryToken]
-        //public async Task<IActionResult> Edit(int id, [Bind("UserId,UserFirstName,UserLastName,UserEmail,UserPassword")] CourseworkUser courseworkUser)
-        //{
-        //    if (id != courseworkUser.UserId)
-        //    {
-        //        return NotFound();
-        //    }
-
-        //    if (ModelState.IsValid)
-        //    {
-        //        try
-        //        {
-        //            _context.Update(courseworkUser);
-        //            await _context.SaveChangesAsync();
-        //        }
-        //        catch (DbUpdateConcurrencyException)
-        //        {
-        //            if (!CourseworkUserExists(courseworkUser.UserId))
-        //            {
-        //                return NotFound();
-        //            }
-        //            else
-        //            {
-        //                throw;
-        //            }
-        //        }
-        //        return RedirectToAction(nameof(Index));
-        //    }
-        //    return View(courseworkUser);
-        //}
 
         // GET: CourseworkUsers/Delete/5
         public async Task<IActionResult> Delete(int? id)
@@ -133,17 +82,6 @@ namespace COMP2001_API.Controllers
 
             return View(courseworkUser);
         }
-
-        // POST: CourseworkUsers/Delete/5
-        //[HttpPost, ActionName("Delete")]
-        //[ValidateAntiForgeryToken]
-        //public async Task<IActionResult> DeleteConfirmed(int id)
-        //{
-        //    var courseworkUser = await _context.CourseworkUsers.FindAsync(id);
-        //    _context.CourseworkUsers.Remove(courseworkUser);
-        //    await _context.SaveChangesAsync();
-        //    return RedirectToAction(nameof(Index));
-        //}
 
         // GET: CourseworkUsers/Validate/5
         public async Task<IActionResult> Validate(int? id)
@@ -168,6 +106,7 @@ namespace COMP2001_API.Controllers
             return _context.CourseworkUsers.Any(e => e.UserId == id);
         }
 
+        //Delete a user
         [HttpPost, ActionName("DeleteUser")]
         public IActionResult DeleteUser(DeleteUser deleteUser)
         {
@@ -179,6 +118,7 @@ namespace COMP2001_API.Controllers
             return RedirectToAction(nameof(Index));
         }
 
+        //Register a new user
         [HttpPost, ActionName("Register")]
         public IActionResult Register(Register register)
         {
@@ -194,6 +134,7 @@ namespace COMP2001_API.Controllers
             return RedirectToAction(nameof(Index));
         }
 
+        //Update a user record
         [HttpPost, ActionName("UpdateUser")]
         public IActionResult UpdateUser(UpdateUser updateUser)
         {
@@ -210,6 +151,7 @@ namespace COMP2001_API.Controllers
             return RedirectToAction(nameof(Index));
         }
 
+        //Validate a user
         [HttpPost, ActionName("ValidateUser")]
         public IActionResult ValidateUser(ValidateUser validateUser)
         {
