@@ -52,18 +52,18 @@ namespace COMP2001_API.Controllers
         // POST: CourseworkUsers/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to, for 
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("UserId,UserFirstName,UserLastName,UserEmail,UserPassword")] CourseworkUser courseworkUser)
-        {
-            if (ModelState.IsValid)
-            {
-                _context.Add(courseworkUser);
-                await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
-            }
-            return View(courseworkUser);
-        }
+        //[HttpPost]
+        //[ValidateAntiForgeryToken]
+        //public async Task<IActionResult> Create([Bind("UserId,UserFirstName,UserLastName,UserEmail,UserPassword")] CourseworkUser courseworkUser)
+        //{
+        //    if (ModelState.IsValid)
+        //    {
+        //        _context.Add(courseworkUser);
+        //        await _context.SaveChangesAsync();
+        //        return RedirectToAction(nameof(Index));
+        //    }
+        //    return View(courseworkUser);
+        //}
 
         // GET: CourseworkUsers/Edit/5
         public async Task<IActionResult> Edit(int? id)
@@ -155,6 +155,21 @@ namespace COMP2001_API.Controllers
         {
             var rowsaffected = _context.Database.ExecuteSqlRaw("EXEC DeleteUser @UserID",
                 new SqlParameter("@UserID", deleteUser.UserID.ToString()));
+
+            ViewBag.Success = rowsaffected;
+
+            return RedirectToAction(nameof(Index));
+        }
+
+        [HttpPost, ActionName("Register")]
+        public IActionResult Register(Register register)
+        {
+            var rowsaffected = _context.Database.ExecuteSqlRaw("EXEC Register @UserFirstName, @UserLastName, @UserEmail, @UserPassword",
+                new SqlParameter("@UserFirstName", register.UserFirstName.ToString()),
+                new SqlParameter("@UserLastName", register.UserLastName.ToString()),
+                new SqlParameter("@UserEmail", register.UserEmail.ToString()),
+                new SqlParameter("@UserPassword", register.UserPassword.ToString())
+                );
 
             ViewBag.Success = rowsaffected;
 
