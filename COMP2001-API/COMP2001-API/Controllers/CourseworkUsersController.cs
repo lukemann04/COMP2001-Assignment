@@ -84,37 +84,37 @@ namespace COMP2001_API.Controllers
         // POST: CourseworkUsers/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to, for 
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("UserId,UserFirstName,UserLastName,UserEmail,UserPassword")] CourseworkUser courseworkUser)
-        {
-            if (id != courseworkUser.UserId)
-            {
-                return NotFound();
-            }
+        //[HttpPost]
+        //[ValidateAntiForgeryToken]
+        //public async Task<IActionResult> Edit(int id, [Bind("UserId,UserFirstName,UserLastName,UserEmail,UserPassword")] CourseworkUser courseworkUser)
+        //{
+        //    if (id != courseworkUser.UserId)
+        //    {
+        //        return NotFound();
+        //    }
 
-            if (ModelState.IsValid)
-            {
-                try
-                {
-                    _context.Update(courseworkUser);
-                    await _context.SaveChangesAsync();
-                }
-                catch (DbUpdateConcurrencyException)
-                {
-                    if (!CourseworkUserExists(courseworkUser.UserId))
-                    {
-                        return NotFound();
-                    }
-                    else
-                    {
-                        throw;
-                    }
-                }
-                return RedirectToAction(nameof(Index));
-            }
-            return View(courseworkUser);
-        }
+        //    if (ModelState.IsValid)
+        //    {
+        //        try
+        //        {
+        //            _context.Update(courseworkUser);
+        //            await _context.SaveChangesAsync();
+        //        }
+        //        catch (DbUpdateConcurrencyException)
+        //        {
+        //            if (!CourseworkUserExists(courseworkUser.UserId))
+        //            {
+        //                return NotFound();
+        //            }
+        //            else
+        //            {
+        //                throw;
+        //            }
+        //        }
+        //        return RedirectToAction(nameof(Index));
+        //    }
+        //    return View(courseworkUser);
+        //}
 
         // GET: CourseworkUsers/Delete/5
         public async Task<IActionResult> Delete(int? id)
@@ -169,6 +169,22 @@ namespace COMP2001_API.Controllers
                 new SqlParameter("@UserLastName", register.UserLastName.ToString()),
                 new SqlParameter("@UserEmail", register.UserEmail.ToString()),
                 new SqlParameter("@UserPassword", register.UserPassword.ToString())
+                );
+
+            ViewBag.Success = rowsaffected;
+
+            return RedirectToAction(nameof(Index));
+        }
+
+        [HttpPost, ActionName("UpdateUser")]
+        public IActionResult UpdateUser(UpdateUser updateUser)
+        {
+            var rowsaffected = _context.Database.ExecuteSqlRaw("EXEC UpdateUser @UserFirstName, @UserLastName, @UserEmail, @UserPassword, @UserID",
+                new SqlParameter("@UserFirstName", updateUser.UserFirstName.ToString()),
+                new SqlParameter("@UserLastName", updateUser.UserLastName.ToString()),
+                new SqlParameter("@UserEmail", updateUser.UserEmail.ToString()),
+                new SqlParameter("@UserPassword", updateUser.UserPassword.ToString()),
+                new SqlParameter("@UserID", updateUser.UserID.ToString())
                 );
 
             ViewBag.Success = rowsaffected;
