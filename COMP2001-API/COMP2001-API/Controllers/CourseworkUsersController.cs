@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Data.SqlClient;
 using COMP2001_API.Models;
 
 namespace COMP2001_API.Controllers
@@ -134,19 +135,30 @@ namespace COMP2001_API.Controllers
         }
 
         // POST: CourseworkUsers/Delete/5
-        [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(int id)
-        {
-            var courseworkUser = await _context.CourseworkUsers.FindAsync(id);
-            _context.CourseworkUsers.Remove(courseworkUser);
-            await _context.SaveChangesAsync();
-            return RedirectToAction(nameof(Index));
-        }
+        //[HttpPost, ActionName("Delete")]
+        //[ValidateAntiForgeryToken]
+        //public async Task<IActionResult> DeleteConfirmed(int id)
+        //{
+        //    var courseworkUser = await _context.CourseworkUsers.FindAsync(id);
+        //    _context.CourseworkUsers.Remove(courseworkUser);
+        //    await _context.SaveChangesAsync();
+        //    return RedirectToAction(nameof(Index));
+        //}
 
         private bool CourseworkUserExists(int id)
         {
             return _context.CourseworkUsers.Any(e => e.UserId == id);
+        }
+
+        [HttpPost, ActionName("DeleteUser")]
+        public IActionResult DeleteUser(DeleteUser deleteUser)
+        {
+            var rowsaffected = _context.Database.ExecuteSqlRaw("EXEC DeleteUser @UserID",
+                new SqlParameter("@UserID", deleteUser.UserID.ToString()));
+
+            ViewBag.Success = rowsaffected;
+
+            return RedirectToAction(nameof(Index));
         }
     }
 }
