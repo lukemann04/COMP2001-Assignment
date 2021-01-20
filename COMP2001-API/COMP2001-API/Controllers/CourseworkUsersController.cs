@@ -145,6 +145,24 @@ namespace COMP2001_API.Controllers
         //    return RedirectToAction(nameof(Index));
         //}
 
+        // GET: CourseworkUsers/Validate/5
+        public async Task<IActionResult> Validate(int? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            var courseworkUser = await _context.CourseworkUsers
+                .FirstOrDefaultAsync(m => m.UserId == id);
+            if (courseworkUser == null)
+            {
+                return NotFound();
+            }
+
+            return View(courseworkUser);
+        }
+
         private bool CourseworkUserExists(int id)
         {
             return _context.CourseworkUsers.Any(e => e.UserId == id);
@@ -185,6 +203,19 @@ namespace COMP2001_API.Controllers
                 new SqlParameter("@UserEmail", updateUser.UserEmail.ToString()),
                 new SqlParameter("@UserPassword", updateUser.UserPassword.ToString()),
                 new SqlParameter("@UserID", updateUser.UserID.ToString())
+                );
+
+            ViewBag.Success = rowsaffected;
+
+            return RedirectToAction(nameof(Index));
+        }
+
+        [HttpPost, ActionName("ValidateUser")]
+        public IActionResult ValidateUser(ValidateUser validateUser)
+        {
+            var rowsaffected = _context.Database.ExecuteSqlRaw("EXEC ValidateUser @UserEmail, @UserPassword",
+                new SqlParameter("@UserEmail", validateUser.UserEmail.ToString()),
+                new SqlParameter("@UserPassword", validateUser.UserPassword.ToString())
                 );
 
             ViewBag.Success = rowsaffected;
