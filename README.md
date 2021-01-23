@@ -5,4 +5,4 @@ This repository contains an authentication API and linked data application.
 C# for the API and PHP for the Linked Data Application.
 </br>
 ## External Assets:
-[Bootstrap](https://getbootstrap.com/) Has beed used in the creation of the Linked Data Application.
+[Bootstrap](https://getbootstrap.com/) has beed used in the creation of the Linked Data Application.
