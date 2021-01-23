@@ -106,61 +106,42 @@ namespace COMP2001_API.Controllers
             return _context.CourseworkUsers.Any(e => e.UserId == id);
         }
 
-        //Delete a user
+        // POST: CourseworkUsers/Delete/5
         [HttpPost, ActionName("DeleteUser")]
         public IActionResult DeleteUser(DeleteUser deleteUser)
         {
-            var rowsaffected = _context.Database.ExecuteSqlRaw("EXEC DeleteUser @UserID",
-                new SqlParameter("@UserID", deleteUser.UserID.ToString()));
-
-            ViewBag.Success = rowsaffected;
+            DataAccess dataAccess = new DataAccess(_context);
+            dataAccess.DeleteUser(deleteUser);
 
             return RedirectToAction(nameof(Index));
         }
 
-        //Register a new user
+        // POST: CourseworkUsers/Create
         [HttpPost, ActionName("Register")]
         public IActionResult Register(Register register)
         {
-            var rowsaffected = _context.Database.ExecuteSqlRaw("EXEC Register @UserFirstName, @UserLastName, @UserEmail, @UserPassword",
-                new SqlParameter("@UserFirstName", register.UserFirstName.ToString()),
-                new SqlParameter("@UserLastName", register.UserLastName.ToString()),
-                new SqlParameter("@UserEmail", register.UserEmail.ToString()),
-                new SqlParameter("@UserPassword", register.UserPassword.ToString())
-                );
-
-            ViewBag.Success = rowsaffected;
+            DataAccess dataAccess = new DataAccess(_context);
+            dataAccess.Register(register);
 
             return RedirectToAction(nameof(Index));
         }
 
-        //Update a user record
+        // POST: CourseworkUsers/Edit/5
         [HttpPost, ActionName("UpdateUser")]
         public IActionResult UpdateUser(UpdateUser updateUser)
         {
-            var rowsaffected = _context.Database.ExecuteSqlRaw("EXEC UpdateUser @UserFirstName, @UserLastName, @UserEmail, @UserPassword, @UserID",
-                new SqlParameter("@UserFirstName", updateUser.UserFirstName.ToString()),
-                new SqlParameter("@UserLastName", updateUser.UserLastName.ToString()),
-                new SqlParameter("@UserEmail", updateUser.UserEmail.ToString()),
-                new SqlParameter("@UserPassword", updateUser.UserPassword.ToString()),
-                new SqlParameter("@UserID", updateUser.UserID.ToString())
-                );
-
-            ViewBag.Success = rowsaffected;
+            DataAccess dataAccess = new DataAccess(_context);
+            dataAccess.UpdateUser(updateUser);
 
             return RedirectToAction(nameof(Index));
         }
 
-        //Validate a user
+        // POST: CourseworkUsers/Validate/5
         [HttpPost, ActionName("ValidateUser")]
         public IActionResult ValidateUser(ValidateUser validateUser)
         {
-            var rowsaffected = _context.Database.ExecuteSqlRaw("EXEC ValidateUser @UserEmail, @UserPassword",
-                new SqlParameter("@UserEmail", validateUser.UserEmail.ToString()),
-                new SqlParameter("@UserPassword", validateUser.UserPassword.ToString())
-                );
-
-            ViewBag.Success = rowsaffected;
+            DataAccess dataAccess = new DataAccess(_context);
+            dataAccess.ValidateUser(validateUser);
 
             return RedirectToAction(nameof(Index));
         }
