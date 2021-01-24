@@ -24,25 +24,21 @@ namespace COMP2001_API.Models
         }
         public void Register(Register register)
         {
-            string salt = GetSaltHash(5);
-
             var rowsaffected = _context.Database.ExecuteSqlRaw("EXEC Register @UserFirstName, @UserLastName, @UserEmail, @UserPassword",
             new SqlParameter("@UserFirstName", register.UserFirstName.ToString()),
             new SqlParameter("@UserLastName", register.UserLastName.ToString()),
             new SqlParameter("@UserEmail", register.UserEmail.ToString()),
-            new SqlParameter("@UserPassword", HashPassword(register.UserPassword.ToString(), salt))
+            new SqlParameter("@UserPassword", HashPassword(register.UserPassword.ToString()))
             );
             return;
         }
         public void UpdateUser(UpdateUser updateUser)
         {
-            string salt = GetSaltHash(5);
-
             var rowsaffected = _context.Database.ExecuteSqlRaw("EXEC UpdateUser @UserFirstName, @UserLastName, @UserEmail, @UserPassword, @UserID",
             new SqlParameter("@UserFirstName", updateUser.UserFirstName.ToString()),
             new SqlParameter("@UserLastName", updateUser.UserLastName.ToString()),
             new SqlParameter("@UserEmail", updateUser.UserEmail.ToString()),
-            new SqlParameter("@UserPassword", HashPassword(updateUser.UserPassword.ToString(), salt)),
+            new SqlParameter("@UserPassword", HashPassword(updateUser.UserPassword.ToString())),
             new SqlParameter("@UserID", updateUser.UserID.ToString())
             );
             return;
@@ -68,16 +64,9 @@ namespace COMP2001_API.Models
 
             return hex.ToString();
         }
-        public string GetSaltHash(int size)
+        public string HashPassword(string input)
         {
-            var rng = new System.Security.Cryptography.RNGCryptoServiceProvider();
-            var buff = new Byte[size];
-            rng.GetBytes(buff);
-            return Convert.ToBase64String(buff);
-        }
-        public string HashPassword(string input, string salt)
-        {
-            byte[] bytes = System.Text.Encoding.UTF8.GetBytes(input + salt);
+            byte[] bytes = System.Text.Encoding.UTF8.GetBytes(input);
             System.Security.Cryptography.SHA256Managed hashstring = new System.Security.Cryptography.SHA256Managed();
             byte[] hash = hashstring.ComputeHash(bytes);
 
